@@ -1,0 +1,129 @@
+# SAMS Docker Compose Configuration
+# This is a skeleton showing the service architecture
+
+version: '3.8'
+
+services:
+  # PostgreSQL for Airflow metadata
+  airflow-db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${AIRFLOW_DB_USER:-airflow}
+      POSTGRES_PASSWORD: ${AIRFLOW_DB_PASSWORD}
+      POSTGRES_DB: airflow
+    volumes:
+      - airflow-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+
+  # Apache Airflow - Workflow Orchestration
+  airflow:
+    build:
+      context: ./airflow/config
+      dockerfile: Dockerfile
+    depends_on:
+      airflow-db:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASSWORD}@airflow-db/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8008:8080"
+
+  # ML Worker - GPU-enabled container for model training/inference
+  ml-worker:
+    build:
+      context: ./ml_worker
+      dockerfile: Dockerfile
+    runtime: nvidia  # Requires nvidia-docker
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    volumes:
+      - ./src:/opt/src:ro
+      - model-artifacts:/opt/data/model_artifacts
+    command: sleep infinity  # Controlled via docker exec
+
+  # MLflow - Experiment Tracking & Model Registry
+  mlflow:
+    build:
+      context: ./mlflow/config
+      dockerfile: Dockerfile
+    depends_on:
+      mlflow-db:
+        condition: service_healthy
+    environment:
+      MLFLOW_BACKEND_STORE_URI: postgresql://${MLFLOW_DB_USER}:${MLFLOW_DB_PASSWORD}@mlflow-db/mlflow
+      MLFLOW_DEFAULT_ARTIFACT_ROOT: /opt/mlflow/artifacts
+    volumes:
+      - mlflow-artifacts:/opt/mlflow/artifacts
+    ports:
+      - "5000:5000"
+
+  # PostgreSQL for MLflow backend
+  mlflow-db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${MLFLOW_DB_USER:-mlflow}
+      POSTGRES_PASSWORD: ${MLFLOW_DB_PASSWORD}
+      POSTGRES_DB: mlflow
+    volumes:
+      - mlflow-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "mlflow"]
+      interval: 10s
+      retries: 5
+
+  # Admin Dashboard
+  sams-admin:
+    build:
+      context: ./sams-admin
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      FLASK_ENV: production
+    ports:
+      - "5001:5001"
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+
+  # Sensor Database (optional profile)
+  sensor-db:
+    build:
+      context: ./sensor-db
+      dockerfile: Dockerfile
+    profiles:
+      - all
+    environment:
+      POSTGRES_USER: ${SENSOR_DB_USER:-sensor}
+      POSTGRES_PASSWORD: ${SENSOR_DB_PASSWORD}
+      POSTGRES_DB: sensor_data
+    volumes:
+      - sensor-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  airflow-db-data:
+  mlflow-db-data:
+  mlflow-artifacts:
+  model-artifacts:
+  redis-data:
+  sensor-db-data:
+
+networks:
+  default:
+    name: sams-network
