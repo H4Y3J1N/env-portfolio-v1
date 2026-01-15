@@ -14,16 +14,16 @@ class SystemConfig:
     """System configuration."""
 
     # Location
-    latitude: float = 35.0
-    longitude: float = 127.0
+    latitude: float = 1.0
+    longitude: float = 1.0
 
     # GDD settings
-    base_temperature: float = 10.0
-    target_gdd: float = 1000.0
+    base_temperature: float = 1.0
+    target_gdd: float = 1.0
 
     # Panel limits
     min_tilt: float = 0.0
-    max_tilt: float = 60.0
+    max_tilt: float = 1.0
 
     # API settings
     api_base_url: str = ''
@@ -38,6 +38,6 @@ class SystemConfig:
     def from_env(cls) -> 'SystemConfig':
         """Load configuration from environment variables."""
         return cls(
-            latitude=float(os.getenv('LATITUDE', 35.0)),
-            longitude=float(os.getenv('LONGITUDE', 127.0))
+            latitude=float(os.getenv('LATITUDE', 1.0)),
+            longitude=float(os.getenv('LONGITUDE', 1.0))
         )

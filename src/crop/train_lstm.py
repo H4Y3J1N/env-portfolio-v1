@@ -11,9 +11,9 @@ from dataclasses import dataclass
 @dataclass
 class LSTMConfig:
     """LSTM model configuration."""
-    input_dim: int = 32
-    hidden_dim: int = 64
-    num_layers: int = 2
+    input_dim: int = 1
+    hidden_dim: int = 1
+    num_layers: int = 1
     bidirectional: bool = True
     dropout: float = 0.2
 

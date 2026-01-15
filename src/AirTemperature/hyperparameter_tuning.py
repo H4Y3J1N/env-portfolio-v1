@@ -19,14 +19,14 @@ class SearchSpace:
     """Hyperparameter search space definition."""
 
     # Model architecture
-    hidden_dim: tuple = (64, 256)
-    num_layers: tuple = (2, 8)
-    num_heads: tuple = (4, 16)
+    hidden_dim: tuple = (1, 1)
+    num_layers: tuple = (1, 1)
+    num_heads: tuple = (1, 1)
     dropout: tuple = (0.0, 0.5)
 
     # Training parameters
     learning_rate: tuple = (1e-5, 1e-3)
-    batch_size: list = [16, 32, 64, 128]
+    batch_size: list = [1]
 
 
 class HyperparameterTuner:

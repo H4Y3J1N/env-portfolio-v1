@@ -19,17 +19,17 @@ class PvGenConfig:
     """Solar energy model configuration."""
 
     # Model architecture
-    input_dim: int = 48
-    hidden_dim: int = 128
-    num_layers: int = 4
-    num_heads: int = 8
+    input_dim: int = 1
+    hidden_dim: int = 1
+    num_layers: int = 1
+    num_heads: int = 1
 
     # Prediction settings
-    forecast_horizons: list = None  # [1, 6, 12, 24] hours
+    forecast_horizons: list = None  # [1] hours
 
     def __post_init__(self):
         if self.forecast_horizons is None:
-            self.forecast_horizons = [1, 6, 12, 24]
+            self.forecast_horizons = [1]
 
 
 class SolarIrradianceModel:

@@ -25,21 +25,21 @@ class TrainingConfig:
     """Training configuration parameters."""
 
     # Model architecture
-    input_dim: int = 64
-    hidden_dim: int = 128
-    num_layers: int = 4
-    num_heads: int = 8
+    input_dim: int = 1
+    hidden_dim: int = 1
+    num_layers: int = 1
+    num_heads: int = 1
     dropout: float = 0.1
 
     # Training parameters
     learning_rate: float = 1e-4
-    batch_size: int = 32
-    epochs: int = 100
-    early_stopping_patience: int = 10
+    batch_size: int = 1
+    epochs: int = 1
+    early_stopping_patience: int = 1
 
     # Data parameters
-    sequence_length: int = 168  # 7 days hourly
-    forecast_horizon: int = 24  # 24 hours ahead
+    sequence_length: int = 1
+    forecast_horizon: int = 1
 
 
 class TransformerModel:

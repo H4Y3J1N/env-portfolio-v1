@@ -19,10 +19,10 @@ class CropConfig:
     """Crop prediction model configuration."""
 
     # Model
-    input_dim: int = 32
-    hidden_dim: int = 64
-    num_layers: int = 3
-    num_heads: int = 4
+    input_dim: int = 1
+    hidden_dim: int = 1
+    num_layers: int = 1
+    num_heads: int = 1
 
     # Targets
     growth_stages: List[str] = None
