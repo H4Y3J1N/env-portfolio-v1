@@ -8,7 +8,7 @@ This is a microservices-based MLOps platform designed for agricultural IoT appli
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                              SAMS Platform                               │
+│                                  Platform                               │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                          │
 │  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐               │
@@ -37,7 +37,7 @@ This is a microservices-based MLOps platform designed for agricultural IoT appli
 │          ┌──────────────────────────────┼───────────────────────┐       │
 │          │                              ▼                       │       │
 │          │  ┌──────────────┐    ┌──────────────┐               │       │
-│          │  │   MLflow     │    │  sams-admin  │               │       │
+│          │  │   MLflow     │    │     admin    │               │       │
 │          │  │   Server     │    │  Dashboard   │               │       │
 │          │  └──────────────┘    └──────┬───────┘               │       │
 │          │                             │                        │       │

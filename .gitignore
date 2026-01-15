@@ -1,4 +1,4 @@
-# SAMS Project .gitignore
+# Project .gitignore
 
 # Python
 __pycache__/
@@ -62,6 +62,7 @@ checkpoints/
 logs/
 *.log
 airflow/logs/
+docs/
 
 # Environment variables (IMPORTANT: never commit secrets)
 .env

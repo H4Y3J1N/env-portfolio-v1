@@ -1,4 +1,4 @@
-# SAMS Admin Dashboard Dockerfile
+# Admin Dashboard Dockerfile
 
 FROM python:3.10-slim
 

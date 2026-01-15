@@ -1,5 +1,5 @@
 """
-SAMS Admin Dashboard
+Admin Dashboard
 
 Flask application for viewing predictions and system status.
 
@@ -15,7 +15,7 @@ from datetime import datetime
 from typing import Dict
 
 
-class SAMSAdminApp:
+class AdminApp:
     """
     Admin dashboard application.
 
@@ -48,7 +48,7 @@ class SAMSAdminApp:
 
 # Flask app initialization would go here
 # app = Flask(__name__)
-# sams = SAMSAdminApp()
+# admin = AdminApp()
 
 if __name__ == '__main__':
-    print("SAMS Admin Dashboard skeleton")
+    print("Admin Dashboard skeleton")

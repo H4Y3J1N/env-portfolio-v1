@@ -22,7 +22,7 @@ DAG_CONFIG = {
 }
 
 DEFAULT_ARGS = {
-    'owner': 'sams-ml',
+    'owner': 'ml',
     'depends_on_past': False,
     'retries': 2,
     'retry_delay': timedelta(minutes=5)

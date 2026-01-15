@@ -16,7 +16,7 @@
 ┌─────────────────────────────────────────────────────────────────────┐
 │                         Docker Compose                              │
 ├─────────────┬─────────────┬─────────────┬─────────────┬─────────────┤
-│   Airflow   │  ML Worker  │   MLflow    │ sams-admin  │  sensor-db  │
+│   Airflow   │  ML Worker  │   MLflow    │    admin    │  sensor-db  │
 │   (DAGs)    │  (GPU/CUDA) │  (Tracking) │ (Dashboard) │ (PostgreSQL)│
 ├─────────────┴─────────────┴─────────────┴─────────────┴─────────────┤
 │                        공유 볼륨                                     │
@@ -31,7 +31,7 @@
 | **Airflow** | ML 파이프라인 워크플로우 오케스트레이션 | Apache Airflow, PostgreSQL |
 | **ML Worker** | GPU 기반 모델 학습 및 추론 컨테이너 | PyTorch, CUDA 12.4, Python |
 | **MLflow** | 실험 추적 및 모델 레지스트리 | MLflow, PostgreSQL |
-| **sams-admin** | 관리자 대시보드 및 API 엔드포인트 | Flask, Redis |
+| **admin** | 관리자 대시보드 및 API 엔드포인트 | Flask, Redis |
 | **sensor-db** | 시계열 센서 데이터 저장소 | PostgreSQL, TimescaleDB |
 
 ## ML 모델
@@ -77,7 +77,7 @@ GDD 기반 지능형 틸트 각도 최적화 시스템
                               ↓
                 MLflow 로깅 ← 학습/추론
                               ↓
-                      sams-admin API
+                          admin API
                               ↓
                     대시보드 / PLC 제어
 ```
@@ -104,7 +104,7 @@ root/
 ├── mlflow/
 │   └── config/              # MLflow 서버 설정
 ├── ml_worker/               # GPU 워커 컨테이너
-├── sams-admin/              # 관리자 대시보드
+├── admin/              # 관리자 대시보드
 ├── sensor-db/               # 데이터베이스
 ├── src/
 │   ├── AirTemperature/      # 기온 예측 모듈
