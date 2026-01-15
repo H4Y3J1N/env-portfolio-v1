@@ -1,8 +1,8 @@
-# SAMS Architecture Documentation
+# Architecture Documentation
 
 ## System Overview
 
-SAMS (Smart Agriculture Management System) is a microservices-based MLOps platform designed for agricultural IoT applications.
+This is a microservices-based MLOps platform designed for agricultural IoT applications.
 
 ## Component Diagram
 
